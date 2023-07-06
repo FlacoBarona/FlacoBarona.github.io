@@ -3,10 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Solicitud Cambios</title>
-    <script type="text/javascript" src="https://mateobarona.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-ia3qmx/b/4/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=es-ES&collectorId=2d317069"></script>
+    <title>Formulario de Solicitud de cambios</title>
+    <style>
+        .arrow {
+          position: relative;
+          width: 50px;
+          height: 50px;
+          background-color: #333;          
+          animation: move 2s infinite;
+        }
+        .arrow:before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 10px;
+          height: 10px;
+          background-color: #fff;
+          transform: translate(-50%, -50%) rotate(45deg);
+          animation: pulse 2s infinite;
+        }
+        @keyframes move {
+          0% {
+            left: 0;
+          }
+          50% {
+            left: 50%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+        @keyframes pulse {
+          0% {
+            transform: translate(-50%, -50%) rotate(45deg) scale(1);
+          }
+          50% {
+            transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
+          }
+          100% {
+            transform: translate(-50%, -50%) rotate(45deg) scale(1);
+          }
+        }
+
+        .hola{
+            text-align: center;
+        }
+      </style>
+  
 </head>
-<body>
+<body>        
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="hola"><h2>Crea tu Formulario aquí</h2></div>
+    <img src="/img/flecha.png" alt="" class="arrow">    
     <script type="text/javascript" src="https://mateobarona.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-ia3qmx/b/4/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=es-ES&collectorId=2d317069"></script>
 </body>
 </html>
