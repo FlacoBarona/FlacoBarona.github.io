@@ -1,61 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Solicitud de cambios</title>
+    <title>Portafolio | Analista de Datos & Automatización</title>
     <style>
-        .arrow {
-          position: relative;
-          width: 50px;
-          height: 50px;
-          background-color: #333;          
-          animation: move 2s infinite;
+        /* --- ESTILOS GENERALES (DISEÑO LIMPIO Y OSCURO) --- */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8; /* Azul Brillante */
+            --accent-hover: #0ea5e9;
         }
-        .arrow:before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 10px;
-          height: 10px;
-          background-color: #fff;
-          transform: translate(-50%, -50%) rotate(45deg);
-          animation: pulse 2s infinite;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
-        @keyframes move {
-          0% {
-            left: 0;
-          }
-          50% {
-            left: 50%;
-          }
-          100% {
-            left: 100%;
-          }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        @keyframes pulse {
-          0% {
-            transform: translate(-50%, -50%) rotate(45deg) scale(1);
-          }
-          50% {
-            transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
-          }
-          100% {
-            transform: translate(-50%, -50%) rotate(45deg) scale(1);
-          }
+        
+        /* --- HEADER / HERO --- */
+        header {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: -webkit-linear-gradient(45deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #0f172a;
+            padding: 10px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .btn:hover { background-color: var(--accent-hover); }
+
+        /* --- SECCIONES --- */
+        section { margin-bottom: 60px; }
+        h2 {
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
         }
 
-        .hola{
-            text-align: center;
+        /* --- GRID DE HABILIDADES --- */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-      </style>
-  
+        .skill-tag {
+            background-color: var(--card-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+        }
+
+        /* --- TARJETAS DE PROYECTOS --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.2s;
+            border: 1px solid #334155;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .project-tech {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .project-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--text-main);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--accent);
+        }
+
+        /* --- CONTACTO / FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #334155;
+            color: var(--text-muted);
+        }
+        
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1.1rem; }
+        }
+    </style>
 </head>
-<body>        
-    <br><br><br><br><br><br><br><br><br><br><br><br>
-    <div class="hola"><h2>Crea tu Formulario aquí</h2></div>
-    <img src="/img/flecha.png" alt="" class="arrow">    
-    <script type="text/javascript" src="https://mateobarona.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-ia3qmx/b/4/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=es-ES&collectorId=2d317069"></script>
-</body>
-</html>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Mateo Barona</h1>
+            <p class="subtitle">Analista de Datos & Especialista en Automatización</p>
+            <p style="max-width: 600px; margin: 0 auto 30px auto; color: #cbd5e1;">
+                Transformo datos complejos en decisiones claras y automatizo procesos manuales para ahorrar tiempo y recursos. 
+                Estudiante con experiencia real en logística automotriz (Ambacar).
+            </p>
+            <a href="www.linkedin.com/in/mateo-barona-18638420b" class="btn">Ver LinkedIn</a>
+            <a href="https://github.com/FlacoBarona" class="btn" style="background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-left: 10px;">GitHub</a>
+        </header>
+
+        <section>
+            <h2>Sobre Mí</h2>
+            <p>
+                Me apasiona la intersección entre la ingeniería de datos y la eficiencia operativa. 
+                Actualmente soy pasante en <strong>Ambacar</strong>, donde he liderado la creación de chatbots inteligentes 
+                y la optimización de reportes financieros y logísticos. Mi objetivo es eliminar el trabajo repetitivo 
+                mediante flujos inteligentes (n8n/Python) y dar visibilidad a los datos (Power BI/SQL).
+            </p>
+        </section>
+
+        <section>
+            <h2>Tecnologías</h2>
+            <div class="skills-grid">
+                <span class="skill-tag">Python 🐍</span>
+                <span class="skill-tag">SQL (MySQL/PostgreSQL) 🗄️</span>
+                <span class="skill-tag">Power BI & DAX 📊</span>
+                <span class="skill-tag">n8n (Workflow Automation) ⚡</span>
+                <span class="skill-tag">Make (Integromat) 🟣</span>
+                <span class="skill-tag">Pentaho PDI & Apache Hop (ETL) 🔄</span>
+                <span class="skill-tag">Excel Avanzado 📗</span>
+                <span class="skill-tag">Google Gemini API 🤖</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Proyectos Destacados</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <div class="project-title">🤖 Asistente de Calendario con IA</div>
+                    <div class="project-tech">Stack: n8n, Google Gemini, Telegram API, Google Calendar</div>
+                    <p>
+                        Un agente inteligente capaz de recibir notas de voz y texto para gestionar una agenda en tiempo real.
+                        Incluye lógica de prevención de conflictos de horario y transcripción automática de audio.
+                    </p>
+                    <a href="https://github.com/FlacoBarona/Google_Calendar_Assistant">Ver Código en GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-title
