@@ -164,7 +164,7 @@
             <span class="role">Data Analyst & Automation</span>
             
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 15px;">
-                Ingeniero de Software en formación. Ambato, Ecuador.
+                Software Engineer in training. <br>Ambato, Ecuador.
             </p>
 
             <div class="social-links">
@@ -182,15 +182,23 @@
 
     <main class="main-content">
 
-        <h2 class="section-title">Sobre Mí</h2>
+        <h2 class="section-title">About me</h2>
         <section class="about-section">
-            <p>
-                ¡Hola! Soy un perfil híbrido apasionado por la eficiencia. Me encuentro en la intersección entre la <strong>Ingeniería de Datos</strong> y la <strong>Automatización de Procesos</strong>.
+            <p>                
+                Hello! This is a hybrid profile with a passion for efficiency. I am at the intersection of <strong>Data Engineering</strong>strong> and <strong>Process Automation</strong>strong>.
             </p>
-            <br>
+            <br>            
             <p>
-                Actualmente trabajo como Pasante en <strong>Ambacar</strong>, donde he pasado de la teoría a la práctica resolviendo problemas reales de logística y finanzas. Mi filosofía es simple: si una tarea repetitiva te quita más de 15 minutos al día, merece ser automatizada.
-            </p>
+                My professional focus lies at the intersection of Data Analysis and Process Automation. I am passionate not only about understanding what the data says, but also about building the automatic flows that ensure that information arrives on time and without manual errors.<br>
+                I am currently working as an intern at Ambacar, where I have had the opportunity to move from theory to practice by managing large volumes of data for the automotive sector.<br>
+                What do I bring to the table? <br>
+                🚀 Automation: I design flows in n8n and Make to reduce repetitive tasks. <br>
+                I recently developed an inventory chatbot that directly supports the logistics team. <br>
+                📊 Data Engineering & BI: Solid experience building complex ETLs (Pentaho PDI, Apache Hop) and optimizing reports in Power BI and SQL (achieving load time reductions of up to 80%). <br>
+                💡 Growth mindset: My greatest “superpower” is technical curiosity. <br>
+                I am always learning a new tool or language (currently perfecting Python) to solve business problems more efficiently. <br>
+                I am looking to consolidate my experience in challenging environments where I can continue to transform data into profitable actions.
+            </p>    
             <div class="tech-stack">
                 <span class="badge">Python 🐍</span>
                 <span class="badge">n8n ⚡</span>
@@ -200,14 +208,14 @@
             </div>
         </section>
 
-        <h2 class="section-title">Proyectos Destacados</h2>
+        <h2 class="section-title">Highlight Projects</h2>
         <div class="projects-grid">
             
             <div class="project-card">
                 <div>
                     <i class="fas fa-calendar-alt project-icon"></i>
                     <h3 class="project-title">AI Calendar Agent</h3>
-                    <p class="project-desc">Asistente multimodal (Voz/Texto) con prevención de conflictos de horario usando Gemini Pro.</p>
+                    <p class="project-desc">Multimodal assistant (Voice/Text) with scheduling conflict prevention using Gemini Pro.</p>
                 </div>
                 <button class="btn-details" onclick="openModal('modal-1')">Ver Detalles</button>
             </div>
@@ -216,7 +224,7 @@
                 <div>
                     <i class="fas fa-robot project-icon"></i>
                     <h3 class="project-title">Logistics Chatbot</h3>
-                    <p class="project-desc">RPA implementado en Ambacar. Consultas de inventario en tiempo real vía WhatsApp/Telegram.</p>
+                    <p class="project-desc">RPA implemented at Ambacar. Real-time inventory queries via WhatsApp/Telegram..</p>
                 </div>
                 <button class="btn-details" onclick="openModal('modal-2')">Ver Detalles</button>
             </div>
@@ -225,7 +233,7 @@
                 <div>
                     <i class="fas fa-network-wired project-icon"></i>
                     <h3 class="project-title">Corporate ETL</h3>
-                    <p class="project-desc">Centralización financiera de 3 empresas (Ambacar, Ciauto, Automekano) para BI.</p>
+                    <p class="project-desc">Financial centralization of three companies (Ambacar, Ciauto, Automekano) for BI.</p>
                 </div>
                 <button class="btn-details" onclick="openModal('modal-3')">Ver Detalles</button>
             </div>
@@ -234,7 +242,7 @@
         <h2 class="section-title">Actividad en Código</h2>
         <div class="github-wrapper">
             <p style="margin-bottom: 20px; color: var(--text-muted);">
-                Mi constancia en el desarrollo (Commits, PRs y Code Reviews):
+                My consistency in development (Commits, PRs, and Code Reviews):
             </p>
             <img src="https://ghchart.rshah.org/38bdf8/FlacoBarona" alt="GitHub Chart" style="width: 100%; opacity: 0.9;">
             
@@ -255,13 +263,13 @@
             <img src="n8n_workflow.png" alt="Flujo n8n" style="width: 100%; border-radius: 8px; border: 1px solid #333; margin-bottom: 20px;">
 
             <p style="color: #ccc; margin-bottom: 15px;">
-                Este proyecto soluciona el problema de la doble reserva en agendas apretadas. Utiliza <strong>n8n</strong> como orquestador central para recibir notas de voz de Telegram.
+                This project solves the problem of double bookings in busy schedules. It uses <strong>n8n</strong> as the central orchestrator to receive voice notes from Telegram.
             </p>
-            <h4 style="color: white; margin-top: 15px;">Características Clave:</h4>
+            <h4 style="color: white; margin-top: 15px;">Key features:</h4>
             <ul style="color: #aaa; margin-left: 20px; margin-bottom: 20px;">
-                <li>Transcripción de audio a texto con Gemini API.</li>
-                <li>Consulta de disponibilidad en tiempo real (Google Calendar API).</li>
-                <li>Lógica condicional: Si hay evento -> Sugerir otro horario.</li>
+                <li>Audio-to-text transcription with Gemini API.</li>
+                <li>Real-time availability check (Google Calendar API).</li>
+                <li>Conditional logic: If there is an event -> Suggest another time.</li>
             </ul>
         </div>
     </div>
@@ -270,10 +278,10 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="closeModal('modal-2')">&times;</button>
             <h2 style="color: var(--accent); margin-bottom: 20px;">🚛 Logistics Chatbot</h2>
-            <p style="color: #ccc;">Automatización desarrollada para reducir la carga operativa del equipo de logística en Ambacar.</p>
+            <p style="color: #ccc;">Automation developed to reduce the operational workload of the logistics team at Ambacar.</p>
             <br>
             <p style="color: #aaa;">
-                El bot intercepta mensajes con números de chasis o modelos, consulta la base de datos SQL interna y devuelve la ubicación exacta del vehículo en bodega en menos de 2 segundos.
+                The bot intercepts messages containing chassis numbers or models, consults the internal SQL database, and returns the exact location of the vehicle in the warehouse in less than 2 seconds.
             </p>
         </div>
     </div>
@@ -281,11 +289,11 @@
     <div id="modal-3" class="modal-overlay" onclick="closeModal('modal-3')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="closeModal('modal-3')">&times;</button>
-            <h2 style="color: var(--accent); margin-bottom: 20px;">🔄 ETL Financiero</h2>
-            <p style="color: #ccc;">Ingeniería de datos pura usando <strong>Apache Hop y Pentaho</strong>.</p>
+            <h2 style="color: var(--accent); margin-bottom: 20px;">🔄 Financial ETL</h2>
+            <p style="color: #ccc;">Pure data engineering using <strong>Apache Hop and Pentaho</strong>.</p>
             <br>
             <p style="color: #aaa;">
-                El reto consistía en unificar la cartera de clientes de 3 empresas distintas. Diseñé un flujo que extrae, limpia (normalización de nombres y monedas) y carga los datos en un Data Warehouse listo para ser consumido por Power BI.
+                The challenge was to unify the customer portfolios of three different companies. I designed a flow that extracts, cleans (standardizing names and currencies), and loads the data into a data warehouse ready to be consumed by Power BI.
             </p>
         </div>
     </div>
