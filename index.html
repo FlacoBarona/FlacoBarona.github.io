@@ -11,10 +11,11 @@
     <style>
         /* --- VARIABLES --- */
         :root {
-            --bg-body: #09090b;       /* Fondo General */
-            --sidebar-bg: #09090b;    /* Fondo Sidebar */
-            --card-bg: #18181b;       /* Fondo Tarjetas */
-            --accent: #38bdf8;        /* Azul Cyan */
+            --bg-body: #09090b;       
+            --sidebar-bg: #09090b;    
+            --card-bg: #18181b;       
+            --accent: #38bdf8;        
+            --accent-dark: #0284c7;
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
             --border: #27272a;
@@ -26,7 +27,7 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            display: flex; /* Layout Flexbox para Sidebar + Main */
+            display: flex; 
             min-height: 100vh;
         }
 
@@ -36,7 +37,7 @@
         .sidebar {
             width: 300px;
             height: 100vh;
-            position: sticky; /* Se queda fijo al hacer scroll */
+            position: sticky; 
             top: 0;
             padding: 40px 30px;
             border-right: 1px solid var(--border);
@@ -73,12 +74,12 @@
 
         /* --- 2. MAIN CONTENT (Derecha) --- */
         .main-content {
-            flex: 1; /* Ocupa el resto del espacio */
+            flex: 1; 
             padding: 60px 80px;
             overflow-y: auto;
+            overflow-x: hidden; /* Evita scroll horizontal en el body */
         }
 
-        /* Títulos de Sección */
         .section-title {
             font-size: 2rem; font-weight: 800; margin-bottom: 30px;
             display: flex; align-items: center; gap: 15px;
@@ -87,7 +88,6 @@
             content: ""; flex: 1; height: 1px; background: var(--border);
         }
 
-        /* --- SECCIÓN: SOBRE MÍ --- */
         .about-section {
             background: var(--card-bg); padding: 30px; border-radius: 16px; 
             border: 1px solid var(--border); margin-bottom: 60px;
@@ -99,16 +99,30 @@
             padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
         }
 
-        /* --- SECCIÓN: PROYECTOS (Grid) --- */
-        .projects-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 60px;
+        /* --- CARRUSEL DE PROYECTOS (NUEVO) --- */
+        .projects-carousel {
+            display: flex;
+            overflow-x: auto; /* Permite scroll horizontal */
+            gap: 25px;
+            padding-bottom: 20px; /* Espacio para la barra de scroll */
+            margin-bottom: 60px;
+            scroll-behavior: smooth;
         }
+
+        /* Estilo de la barra de scroll del carrusel */
+        .projects-carousel::-webkit-scrollbar { height: 8px; }
+        .projects-carousel::-webkit-scrollbar-track { background: var(--bg-body); border-radius: 4px; }
+        .projects-carousel::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        .projects-carousel::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
         .project-card {
+            min-width: 320px; /* Ancho fijo para que funcione el carrusel */
             background: var(--card-bg); padding: 30px; border-radius: 16px;
             border: 1px solid var(--border); transition: 0.3s;
             display: flex; flex-direction: column; justify-content: space-between;
+            flex-shrink: 0; /* Evita que se encojan */
         }
-        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         
         .project-icon { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
         .project-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
@@ -121,7 +135,27 @@
         }
         .btn-details:hover { background: var(--accent); border-color: var(--accent); color: #000; }
 
-        /* --- SECCIÓN: GITHUB CHART (Al final) --- */
+        /* --- BOTÓN GITHUB PRO (NUEVO ESTILO) --- */
+        .btn-github-pro {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px; /* Redondo estilo píldora */
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-github-pro:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.7);
+            color: #fff; /* Asegura que el texto siga blanco */
+        }
+
+        /* --- GITHUB CHART --- */
         .github-wrapper {
             background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border);
         }
@@ -129,7 +163,7 @@
         /* --- MODAL SYSTEM --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 2000; /* Mayor z-index que sidebar */
             display: none; justify-content: center; align-items: center; padding: 20px;
             opacity: 0; transition: opacity 0.3s;
         }
@@ -139,13 +173,15 @@
             background: #121212; width: 100%; max-width: 700px; max-height: 90vh;
             border-radius: 16px; border: 1px solid var(--border); overflow-y: auto;
             position: relative; padding: 30px; transform: scale(0.95); transition: transform 0.3s;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
         
         .close-btn { 
             position: absolute; top: 20px; right: 20px; background: none; border: none; 
-            color: #fff; font-size: 1.5rem; cursor: pointer; 
+            color: #fff; font-size: 1.5rem; cursor: pointer; transition: 0.2s;
         }
+        .close-btn:hover { color: var(--accent); transform: rotate(90deg); }
 
         /* RESPONSIVE */
         @media (max-width: 900px) {
@@ -189,23 +225,20 @@
 
         <h2 class="section-title">About me</h2>
         <section class="about-section">
-            <p>                
+            <p>                 
                 Hello! This is a hybrid profile with a passion for efficiency. I am at the intersection of <strong>Data Engineering</strong> and <strong>Process Automation</strong>.
             </p>
             <br>            
             <p>
                 My professional focus lies at the intersection of Data Analysis and Process Automation. I am passionate not only about understanding what the data says, but also about building the automatic flows that ensure that information arrives on time and without manual errors.<br>
-                I am currently working as an intern at Ambacar, where I have had the opportunity to move from theory to practice by managing large volumes of data for the automotive sector.<br>
+                I am currently working as an intern at Ambacar, where I have had the opportunity to move from theory to practice by managing large volumes of data for the automotive sector.<br><br>
                 What do I bring to the table? <br>
-                🚀 Automation: I design flows in n8n and Make to reduce repetitive tasks. <br>
-                I recently developed an inventory chatbot that directly supports the logistics team. <br>
-                📊 Data Engineering & BI: Solid experience building complex ETLs (Pentaho PDI, Apache Hop) and optimizing reports in Power BI and SQL (achieving load time reductions of up to 80%). <br>
-                💡 Growth mindset: My greatest “superpower” is technical curiosity. <br>
-                I am always learning a new tool or language (currently perfecting Python) to solve business problems more efficiently. <br>
-                I am looking to consolidate my experience in challenging environments where I can continue to transform data into profitable actions.
+                🚀 <strong>Automation:</strong> I design flows in n8n and Make to reduce repetitive tasks. I recently developed an inventory chatbot that directly supports the logistics team. <br>
+                📊 <strong>Data Engineering & BI:</strong> Solid experience building complex ETLs (Pentaho PDI, Apache Hop) and optimizing reports in Power BI and SQL (achieving load time reductions of up to 80%). <br>
+                💡 <strong>Growth mindset:</strong> My greatest “superpower” is technical curiosity. I am always learning a new tool or language to solve business problems more efficiently.
             </p>    
             <div class="tech-stack">
-                <p>Tech Stack:</p>
+                <p style="width: 100%; margin-bottom: 10px; color: var(--text-muted);">Tech Stack:</p>
                 <span class="badge">Python 🐍</span>
                 <span class="badge">n8n ⚡</span>
                 <span class="badge">SQL 🗄️</span>
@@ -214,8 +247,9 @@
             </div>
         </section>
 
-        <h2 class="section-title">Highlight Projects</h2>
-        <div class="projects-grid">
+        <h2 class="section-title">Highlight Projects <span style="font-size: 0.9rem; color: var(--text-muted); margin-left: 10px; font-weight: 400;">(Scroll to see more ->)</span></h2>
+        
+        <div class="projects-carousel">
             
             <div class="project-card">
                 <div>
@@ -230,7 +264,7 @@
                 <div>
                     <i class="fas fa-robot project-icon"></i>
                     <h3 class="project-title">Logistics Chatbot</h3>
-                    <p class="project-desc">RPA implemented at Ambacar. Real-time inventory queries via WhatsApp/Telegram..</p>
+                    <p class="project-desc">RPA implemented at Ambacar. Real-time inventory queries via WhatsApp/Telegram.</p>
                 </div>
                 <button class="btn-details" onclick="openModal('modal-2')">View Details</button>
             </div>
@@ -243,6 +277,34 @@
                 </div>
                 <button class="btn-details" onclick="openModal('modal-3')">View Details</button>
             </div>
+
+            <div class="project-card">
+                <div>
+                    <i class="fas fa-id-card project-icon"></i>
+                    <h3 class="project-title">Face Classification</h3>
+                    <p class="project-desc">Computer Vision model using TensorFlow to classify human faces vs non-human.</p>
+                </div>
+                <button class="btn-details" onclick="openModal('modal-4')">View Details</button>
+            </div>
+
+            <div class="project-card">
+                <div>
+                    <i class="fas fa-chart-line project-icon"></i>
+                    <h3 class="project-title">Sales Dashboard</h3>
+                    <p class="project-desc">Power BI report with advanced DAX for predictive analysis of sales trends.</p>
+                </div>
+                <button class="btn-details" onclick="openModal('modal-5')">View Details</button>
+            </div>
+
+            <div class="project-card">
+                <div>
+                    <i class="fas fa-code project-icon"></i>
+                    <h3 class="project-title">Python Automation Scripts</h3>
+                    <p class="project-desc">Collection of scripts for data scraping and automated file management.</p>
+                </div>
+                <button class="btn-details" onclick="openModal('modal-6')">View Details</button>
+            </div>
+
         </div>
 
         <h2 class="section-title">Code Activity</h2>
@@ -277,11 +339,12 @@
                 <li>Real-time availability check (Google Calendar API).</li>
                 <li>Conditional logic: If there is an event -> Suggest another time.</li>
             </ul>
+            
             <div style="margin-top: 30px; text-align: center;">
-    <a href="https://github.com/FlacoBarona/Google_Calendar_Assistant" target="_blank" class="btn-modal" style="display:inline-block; width:auto; background:var(--accent); color:#000;">
-        See code con GitHub <i class="fab fa-github"></i>
-    </a>
-</div>
+                <a href="https://github.com/FlacoBarona/Google_Calendar_Assistant" target="_blank" class="btn-github-pro">
+                    <i class="fab fa-github"></i> View Code on GitHub
+                </a>
+            </div>
         </div>
     </div>
 
@@ -306,6 +369,55 @@
             <p style="color: #aaa;">
                 The challenge was to unify the customer portfolios of three different companies. I designed a flow that extracts, cleans (standardizing names and currencies), and loads the data into a data warehouse ready to be consumed by Power BI.
             </p>
+        </div>
+    </div>
+
+    <div id="modal-4" class="modal-overlay" onclick="closeModal('modal-4')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal('modal-4')">&times;</button>
+            <h2 style="color: var(--accent); margin-bottom: 20px;">👤 Face Classification Model</h2>
+            <p style="color: #ccc;">A Deep Learning project exploring Computer Vision capabilities.</p>
+            <br>
+            <p style="color: #aaa;">
+                Developed a Convolutional Neural Network (CNN) using TensorFlow and Keras. The model was trained on a dataset of human and non-human faces to learn distinctive features, achieving an accuracy of over 90% on the validation set.
+            </p>
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="https://github.com/FlacoBarona" target="_blank" class="btn-github-pro">
+                    <i class="fab fa-github"></i> View Code on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-5" class="modal-overlay" onclick="closeModal('modal-5')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal('modal-5')">&times;</button>
+            <h2 style="color: var(--accent); margin-bottom: 20px;">📈 Advanced Sales Dashboard</h2>
+            <p style="color: #ccc;">Business Intelligence solution for sales forecasting.</p>
+            <br>
+            <p style="color: #aaa;">
+                Created a complex Power BI report connecting to multiple data sources. Utilized advanced DAX measures to calculate Year-over-Year growth, Moving Averages, and deployed a forecasting model to predict sales for the next quarter.
+            </p>
+        </div>
+    </div>
+
+    <div id="modal-6" class="modal-overlay" onclick="closeModal('modal-6')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal('modal-6')">&times;</button>
+            <h2 style="color: var(--accent); margin-bottom: 20px;">🐍 Python Automation Scripts</h2>
+            <p style="color: #ccc;">A collection of scripts to automate daily boring tasks.</p>
+            <br>
+            <p style="color: #aaa;">
+                Includes scripts for: <br>
+                - Web Scraping using BeautifulSoup to gather market data.<br>
+                - Automating PDF report generation with Pandas.<br>
+                - File organization and cleanup based on file types.
+            </p>
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="https://github.com/FlacoBarona" target="_blank" class="btn-github-pro">
+                    <i class="fab fa-github"></i> View Code on GitHub
+                </a>
+            </div>
         </div>
     </div>
 
