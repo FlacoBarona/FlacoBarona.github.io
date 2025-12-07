@@ -3,327 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mateo Barona | Dashboard</title>
+    <title>Mateo Barona | Data & Automation</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* --- VARIABLES --- */
         :root {
-            --bg-body: #09090b;       /* Negro profundo */
-            --bg-card: #18181b;       /* Gris Zinc */
-            --bg-card-hover: #27272a;
-            --text-main: #f4f4f5;
+            --bg-body: #09090b;
+            --bg-card: #18181b;
+            --accent: #38bdf8;
+            --text-main: #ffffff;
             --text-muted: #a1a1aa;
-            --accent: #3b82f6;        /* Azul UI */
-            --border: #27272a;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: var(--bg-body);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        a { text-decoration: none; color: inherit; }
-
-        /* --- SIDEBAR (NAVEGACIÓN) --- */
-        .sidebar {
-            width: 260px;
-            background: var(--bg-body);
-            border-right: 1px solid var(--border);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: fixed;
-            height: 100vh;
-            left: 0; top: 0;
-            z-index: 10;
-        }
-
-        .user-mini {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .user-mini img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            border-radius: 8px;
-            color: var(--text-muted);
-            transition: 0.2s;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: var(--bg-card);
-            color: var(--text-main);
+            line-height: 1.6;
         }
         
-        .nav-item.active i { color: var(--accent); }
-
-        /* --- MAIN CONTENT (BENTO GRID) --- */
-        .main-content {
-            margin-left: 260px; /* Ancho del sidebar */
-            padding: 40px;
-            width: 100%;
-            max-width: 1400px;
-        }
-
-        .header-title {
-            margin-bottom: 30px;
-        }
-        .header-title h1 { font-size: 2rem; font-weight: 800; }
-        .header-title p { color: var(--text-muted); }
-
-        /* EL GRID MÁGICO */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 Columnas */
-            grid-auto-rows: minmax(180px, auto);   /* Altura mínima */
-            gap: 20px;
-        }
-
-        /* CLASES PARA TAMAÑOS DE TARJETAS */
-        .col-span-1 { grid-column: span 1; }
-        .col-span-2 { grid-column: span 2; }
-        .col-span-3 { grid-column: span 3; } /* Ocupa 3 columnas */
-        .col-span-4 { grid-column: span 4; } /* Ancho completo */
-        .row-span-2 { grid-row: span 2; }    /* Alto doble */
-
-        /* ESTILO DE LAS TARJETAS */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            border-color: var(--text-muted);
-            transform: translateY(-2px);
-            background: var(--bg-card-hover);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        /* --- WIDGETS ESPECÍFICOS --- */
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        a { text-decoration: none; transition: 0.3s; }
         
-        /* 1. Stack Widget (Iconos) */
-        .stack-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 15px;
+        /* --- HERO --- */
+        .hero { text-align: center; padding: 60px 20px; border-bottom: 1px solid #27272a; }
+        .profile-img {
+            width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
+            border: 4px solid var(--accent); margin-bottom: 20px;
         }
-        .stack-icon {
-            font-size: 1.8rem;
-            color: var(--text-muted);
-            transition: 0.2s;
-        }
-        .stack-icon:hover { color: var(--accent); transform: scale(1.2); }
+        h1 { font-size: 3rem; font-weight: 800; margin-bottom: 10px; }
+        .role { color: var(--accent); font-weight: 600; font-size: 1.2rem; font-family: 'JetBrains Mono', monospace; }
 
-        /* 2. Map Widget */
-        .map-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1;
-            filter: invert(1);
-        }
-        .location-pin {
-            margin-top: auto;
-            z-index: 2;
+        /* --- GITHUB STATS --- */
+        .github-section {
+            background: var(--bg-card); padding: 30px; border-radius: 16px; 
+            margin: 40px 0; border: 1px solid #27272a; text-align: center;
         }
 
-        /* 3. GitHub Button */
-        .btn-github {
-            margin-top: 15px;
-            background: #fff;
-            color: #000;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 700;
-            display: block;
+        /* --- PROYECTOS GRID --- */
+        .projects-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px;
+        }
+        .project-card {
+            background: var(--bg-card); padding: 25px; border-radius: 12px;
+            border: 1px solid #27272a; transition: 0.3s; display: flex; flex-direction: column;
+        }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .project-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+        .project-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; }
+        
+        .btn-modal {
+            width: 100%; padding: 10px; background: rgba(56, 189, 248, 0.1); 
+            color: var(--accent); border: none; border-radius: 6px; cursor: pointer; font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-modal:hover { background: var(--accent); color: #000; }
+
+        /* --- MODAL SYSTEM (La Magia) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px);
+            z-index: 1000; display: none; opacity: 0; transition: opacity 0.3s ease;
+            justify-content: center; align-items: center; padding: 20px;
         }
         
-        /* 4. Project Image */
-        .project-img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
+        .modal-overlay.active { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: #18181b; width: 100%; max-width: 700px; max-height: 90vh;
+            border-radius: 16px; border: 1px solid var(--accent);
+            overflow-y: auto; position: relative; transform: scale(0.9); transition: transform 0.3s ease;
+            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.2);
         }
 
-        /* --- RESPONSIVE MOBILE --- */
-        @media (max-width: 1024px) {
-            .bento-grid { grid-template-columns: repeat(2, 1fr); }
-            .col-span-3 { grid-column: span 2; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+
+        /* Estilos dentro del Modal */
+        .modal-header {
+            padding: 20px; border-bottom: 1px solid #27272a;
+            display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #18181b; z-index: 10;
+        }
+        .modal-close {
+            background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;
+        }
+        .modal-close:hover { color: #fff; }
+
+        .modal-body { padding: 30px; }
+        .modal-body h3 { color: var(--accent); margin-top: 20px; margin-bottom: 10px; }
+        .modal-body p { color: #d1d5db; margin-bottom: 15px; font-size: 0.95rem; }
+        .modal-body ul { margin-left: 20px; margin-bottom: 20px; color: #d1d5db; }
+        .modal-body li { margin-bottom: 5px; }
+
+        .tech-badge {
+            display: inline-block; background: #27272a; color: var(--accent);
+            padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px; font-family: 'JetBrains Mono';
         }
 
-        @media (max-width: 768px) {
-            body { flex-direction: column; padding-bottom: 80px; }
-            .sidebar {
-                width: 100%; height: auto; position: fixed; bottom: 0; top: auto;
-                flex-direction: row; padding: 10px 20px; border-right: none; border-top: 1px solid var(--border);
-                justify-content: space-around;
-            }
-            .user-mini, .sidebar-footer { display: none; }
-            .nav-item span { display: none; } /* Solo iconos en móvil */
-            .nav-item { font-size: 1.5rem; padding: 10px; }
-            
-            .main-content { margin-left: 0; padding: 20px; padding-bottom: 100px; }
-            .bento-grid { grid-template-columns: 1fr; }
-            .col-span-1, .col-span-2, .col-span-3, .col-span-4 { grid-column: span 1; }
+        .modal-img-placeholder {
+            width: 100%; height: 200px; background: #27272a; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; color: var(--text-muted);
+            margin-bottom: 20px; border: 1px dashed var(--text-muted);
         }
+        
+        /* Footer */
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div>
-            <div class="user-mini">
-                <img src="profile_image.jpg" alt="Profile">
-                <div>
-                    <h3 style="font-size:1rem;">Mateo Barona</h3>
-                    <span style="font-size:0.8rem; color:var(--text-muted);">Ingeniero & Analista</span>
-                </div>
+<div class="container">
+    
+    <header class="hero">
+        <img src="profile_image.jpg" alt="Profile" class="profile-img">
+        <h1>Mateo Barona</h1>
+        <p class="role">&lt; Software Engineer & Data Analyst /&gt;</p>
+        <p style="color:var(--text-muted); margin-top:15px;">
+            Especialista en n8n, Python y SQL. Transformando datos en automatizaciones rentables.
+        </p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/FlacoBarona" target="_blank" style="margin-right: 15px; font-size: 1.5rem; color: #fff;"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/mateo-barona-18638420b" target="_blank" style="font-size: 1.5rem; color: #0077b5;"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </header>
+
+    <section class="github-section">
+        <h3 style="margin-bottom: 20px;">🔥 Actividad Reciente</h3>
+        <img src="https://ghchart.rshah.org/38bdf8/FlacoBarona" alt="Chart" style="width: 100%; opacity: 0.9;">
+    </section>
+
+    <h2 style="border-left: 4px solid var(--accent); padding-left: 15px;">Proyectos Destacados</h2>
+    <div class="projects-grid">
+        
+        <div class="project-card">
+            <div class="project-title">🤖 AI Calendar Agent</div>
+            <p class="project-desc">Agente multimodal (Voz/Texto) que gestiona agendas complejas evitando conflictos de horario.</p>
+            <button class="btn-modal" onclick="openModal('modal-1')">Ver Detalles Completos</button>
+        </div>
+
+        <div class="project-card">
+            <div class="project-title">🚛 Logistics Chatbot</div>
+            <p class="project-desc">Automatización RPA para consultas de inventario en tiempo real en Ambacar.</p>
+            <button class="btn-modal" onclick="openModal('modal-2')">Ver Detalles Completos</button>
+        </div>
+
+        <div class="project-card">
+            <div class="project-title">🔄 ETL Financiero</div>
+            <p class="project-desc">Pipeline de datos multicompañía para centralizar Cuentas por Cobrar.</p>
+            <button class="btn-modal" onclick="openModal('modal-3')">Ver Detalles Completos</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modal-1" class="modal-overlay" onclick="closeModal('modal-1')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2>🤖 AI Calendar Agent</h2>
+            <button class="modal-close" onclick="closeModal('modal-1')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-img-placeholder">
+                <i class="fas fa-image"></i> &nbsp; [Aquí iría la captura de tu flujo n8n]
             </div>
+
+            <p><strong>El Problema:</strong> La gestión de agenda manual tomaba demasiado tiempo y causaba conflictos de horario (doble reserva).</p>
             
-            <nav class="nav-links">
-                <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
-                <a href="https://github.com/FlacoBarona" class="nav-item"><i class="fab fa-github"></i> <span>GitHub</span></a>
-                <a href="https://www.linkedin.com/in/mateo-barona-18638420b" class="nav-item"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>
-                <a href="mailto:mateobarona3102@gmail.com" class="nav-item"><i class="fas fa-envelope"></i> <span>Contacto</span></a>
-            </nav>
+            <h3>🛠️ Stack Tecnológico</h3>
+            <div>
+                <span class="tech-badge">n8n</span>
+                <span class="tech-badge">Google Gemini 1.5 Pro</span>
+                <span class="tech-badge">Telegram API</span>
+                <span class="tech-badge">Google Calendar API</span>
+            </div>
+
+            <h3>🚀 Solución & Lógica</h3>
+            <p>Desarrollé un agente inteligente que actúa como secretaria virtual. Sus capacidades clave son:</p>
+            <ul>
+                <li><strong>Multimodalidad:</strong> Acepta notas de voz (transcritas con IA) y texto.</li>
+                <li><strong>Lógica Anti-Conflictos:</strong> Antes de agendar, consulta la disponibilidad real. Si hay choque, sugiere otro horario.</li>
+                <li><strong>Manejo de Contexto:</strong> Entiende "mañana a la misma hora" basándose en la fecha actual (`$now`).</li>
+            </ul>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="https://github.com/FlacoBarona/Google_Calendar_Assistant" target="_blank" class="btn-modal" style="display:inline-block; width:auto; background:var(--accent); color:#000;">Ver Código en GitHub <i class="fab fa-github"></i></a>
+            </div>
         </div>
-        
-        <div class="sidebar-footer" style="color: var(--text-muted); font-size: 0.8rem;">
-            <p>© 2025 Ambato, EC</p>
+    </div>
+</div>
+
+<div id="modal-2" class="modal-overlay" onclick="closeModal('modal-2')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2>🚛 Logistics Chatbot (RPA)</h2>
+            <button class="modal-close" onclick="closeModal('modal-2')">&times;</button>
         </div>
-    </aside>
+        <div class="modal-body">
+            <p><strong>Contexto:</strong> Proyecto implementado en <em>Ambacar</em> para optimizar el área logística.</p>
+            
+            <h3>🛠️ Stack Tecnológico</h3>
+            <div>
+                <span class="tech-badge">SQL (MySQL)</span>
+                <span class="tech-badge">Webhooks</span>
+                <span class="tech-badge">WhatsApp Business API</span>
+            </div>
 
-    <main class="main-content">
-        
-        <div class="header-title">
-            <h1>Hola, soy Mateo 👋</h1>
-            <p>Construyendo automatizaciones inteligentes y analizando datos en Ambacar.</p>
+            <h3>🚀 Impacto</h3>
+            <ul>
+                <li>Reducción del 40% en llamadas telefónicas al equipo de bodega.</li>
+                <li>Consultas de stock y ubicación de vehículos en < 2 segundos.</li>
+                <li>Disponible 24/7 sin intervención humana.</li>
+            </ul>
         </div>
+    </div>
+</div>
 
-        <div class="bento-grid">
-
-            <div class="card col-span-2 row-span-2">
-                <div>
-                    <div class="card-title"><i class="fas fa-user-astronaut" style="color:var(--accent)"></i> Sobre Mí</div>
-                    <p class="card-desc" style="margin-top: 20px; font-size: 1rem;">
-                        Soy un <strong>Ingeniero de Software</strong> en formación apasionado por la eficiencia. 
-                        <br><br>
-                        Mi especialidad es única: combino la lógica dura de la ingeniería de datos (ETL, SQL) con la agilidad de las herramientas No-Code (n8n, Make).
-                        <br><br>
-                        Actualmente lidero iniciativas de RPA en <strong>Ambacar</strong>.
-                    </p>
-                </div>                
-            </div>
-
-            <div class="card col-span-1">
-                <div class="map-bg"></div>
-                <div class="location-pin">
-                    <h3 style="font-size: 1.5rem;">🇪🇨</h3>
-                    <strong>Ambato, Ecuador</strong>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Base de operaciones</p>
-                </div>
-            </div>
-
-            <div class="card col-span-1">
-                <div class="card-title"><i class="fas fa-bolt" style="color:#eab308"></i> Stack Core</div>
-                <div class="stack-list">
-                    <i class="fab fa-python stack-icon" title="Python"></i>
-                    <i class="fas fa-database stack-icon" title="SQL"></i>
-                    <i class="fas fa-project-diagram stack-icon" title="n8n"></i>
-                    <i class="fab fa-google stack-icon" title="Gemini AI"></i>
-                    <i class="fas fa-chart-pie stack-icon" title="Power BI"></i>
-                </div>
-            </div>
-
-            <div class="card col-span-2">
-                <div class="card-title"><i class="fas fa-robot"></i> AI Calendar Agent</div>
-                <p class="card-desc">
-                    Sistema de gestión de agenda multimodal (Voz/Texto) con lógica anti-conflictos usando Gemini 1.5 Pro.
-                </p>
-                <div style="display:flex; gap:10px; margin-top:15px;">
-                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">n8n</span>
-                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">TypeScript</span>
-                </div>
-                <a href="https://github.com/FlacoBarona" class="btn-github" target="_blank">Ver Código <i class="fab fa-github"></i></a>
-            </div>
-
-            <div class="card col-span-2">
-                <div class="card-title"><i class="fas fa-truck-loading"></i> Logistics Chatbot</div>
-                <p class="card-desc">
-                    Bot implementado en Ambacar para consultas de inventario vía WhatsApp. Redujo 40% la carga operativa manual.
-                </p>
-                <div style="display:flex; gap:10px; margin-top:15px;">
-                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">SQL</span>
-                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">Webhooks</span>
-                </div>
-            </div>
-
-            <div class="card col-span-4">
-                <div class="card-title"><i class="fas fa-code-branch"></i> Actividad de Ingeniería</div>
-                <img src="https://ghchart.rshah.org/3b82f6/tu-usuario" alt="Github Chart" style="width:100%; margin-top:15px; opacity:0.8;">
-            </div>
-
+<div id="modal-3" class="modal-overlay" onclick="closeModal('modal-3')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2>🔄 ETL Financiero Multicompañía</h2>
+            <button class="modal-close" onclick="closeModal('modal-3')">&times;</button>
         </div>
+        <div class="modal-body">
+            <p><strong>El Reto:</strong> Unificar reportes de Cuentas por Cobrar de 3 razones sociales distintas (Ambacar, Ciauto, Automekano) con estructuras de datos diferentes.</p>
+            
+            <h3>🛠️ Stack Tecnológico</h3>
+            <div>
+                <span class="tech-badge">Pentaho PDI</span>
+                <span class="tech-badge">Apache Hop</span>
+                <span class="tech-badge">Power BI</span>
+            </div>
 
-    </main>
+            <h3>🚀 Arquitectura</h3>
+            <p>Se diseñó un pipeline de datos que:</p>
+            <ul>
+                <li>Extrae datos de los ERPs de cada compañía.</li>
+                <li>Normaliza los nombres de campos y tipos de moneda.</li>
+                <li>Carga la data limpia en un Data Mart centralizado para consumo en Power BI.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Mateo Barona. Hecho con código puro.</p>
+</footer>
+
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+        document.body.style.overflow = 'hidden'; // Evita que se mueva el fondo
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+        document.body.style.overflow = 'auto'; // Reactiva el scroll
+    }
+</script>
 
 </body>
 </html>
