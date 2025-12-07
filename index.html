@@ -3,355 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mateo Barona | Data & Automation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Mateo Barona | Software Engineer & Data</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* --- VARIABLES & RESET --- */
         :root {
-            --bg-dark: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7); /* Efecto cristal */
-            --accent: #0ea5e9; /* Azul Data */
-            --accent-glow: rgba(14, 165, 233, 0.2);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --success: #10b981;
+            --bg: #0a0f1c; /* Fondo casi negro */
+            --card-bg: rgba(20, 30, 48, 0.6);
+            --primary: #38bdf8; /* Cyan */
+            --secondary: #818cf8; /* Indigo */
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --code-font: 'JetBrains Mono', monospace;
+            --body-font: 'Inter', sans-serif;
+            --line-color: rgba(56, 189, 248, 0.2);
         }
 
-        * { box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 20%),
-                              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
-            color: var(--text-primary);
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        /* --- LAYOUT TIPO DASHBOARD --- */
-        .wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            display: grid;
-            grid-template-columns: 300px 1fr; /* Sidebar + Contenido */
-            gap: 40px;
-        }
-
-        /* --- SIDEBAR / PERFIL --- */
-        .sidebar {
-            position: sticky;
-            top: 40px;
-            height: fit-content;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        .profile-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--body-font);
+            overflow-x: hidden; /* Evita scroll horizontal */
         }
 
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            object-fit: cover;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px var(--accent-glow);
+        /* Fondo estilo "Grid" de ingeniería */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .role-badge {
-            background: rgba(14, 165, 233, 0.15);
-            color: var(--accent);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
 
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .social-btn:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px var(--accent-glow);
-        }
-
-        /* --- CONTENIDO PRINCIPAL --- */
-        .main-content {
+        /* --- HERO SECTION (TERMINAL STYLE) --- */
+        .hero {
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
-            gap: 40px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-            margin-bottom: 25px;
-            color: white;
-            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-        }
-
-        .hero-text {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* --- TECH STACK (ESTILO MATRIZ) --- */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
-        }
-
-        .tech-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 10px;
             text-align: center;
-            transition: 0.3s;
-        }
-
-        .tech-item:hover {
-            border-color: var(--accent);
-            background: rgba(14, 165, 233, 0.05);
-        }
-
-        .tech-item i {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--accent);
-        }
-
-        /* --- PROYECTOS (ESTILO TARJETA TÉCNICA) --- */
-        .project-card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 0;
-            overflow: hidden;
-            transition: transform 0.3s;
+            padding: 20px;
             position: relative;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .card-header {
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            background-color: var(--success);
+        .profile-pic {
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
+            border: 4px solid var(--primary);
+            padding: 5px; /* Espacio entre borde y foto */
+            background: transparent;
+            object-fit: cover;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        /* Efecto de escritura (Typing) */
+        .typing-container {
+            font-family: var(--code-font);
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            min-height: 1.5em; /* Reserva espacio */
+        }
+        .cursor {
             display: inline-block;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            width: 10px;
+            background-color: var(--primary);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .cta-buttons {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 0%; height: 100%;
+            background: var(--primary);
+            z-index: -1;
+            transition: 0.3s;
+        }
+        .btn:hover::before { width: 100%; }
+        .btn:hover { color: #0a0f1c; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+        .btn-outline { background: transparent; color: var(--primary); }
+        .btn-filled { background: var(--primary); color: #0a0f1c; }
+
+        /* --- TIMELINE (ROADMAP) --- */
+        .timeline-section {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .card-body {
-            padding: 20px;
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-family: var(--code-font);
         }
 
-        .tags {
+        .timeline {
+            position: relative;
+        }
+
+        /* La línea central */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--line-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .container-card {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0; /* Para animación */
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        /* Alternancia Izquierda / Derecha */
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        /* El punto (nodo) en la línea */
+        .container-card::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg);
+            border: 4px solid var(--primary);
+            top: 20px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        .right::after { left: -10px; }
+
+        /* Contenido de la tarjeta */
+        .content {
+            padding: 25px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            position: relative;
+        }
+        
+        .content:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+            transition: 0.3s;
+        }
+
+        .date {
+            font-family: var(--code-font);
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .tech-stack-mini {
             margin-top: 15px;
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
-
-        .tag {
+        .tech-badge {
             font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
-            color: var(--text-secondary);
-        }
-
-        .btn-link {
-            display: block;
-            text-align: center;
             background: rgba(255,255,255,0.05);
-            padding: 12px;
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: 0.3s;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: var(--code-font);
+            border: 1px solid transparent;
+        }
+        .content:hover .tech-badge { border-color: rgba(56, 189, 248, 0.3); }
+
+        /* Clase visible para JS */
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .btn-link:hover {
-            background: var(--accent);
-            color: #0f172a;
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 850px) {
-            .wrapper { grid-template-columns: 1fr; }
-            .sidebar { position: relative; top: 0; }
+        /* --- RESPONSIVE MOBILE --- */
+        @media screen and (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .timeline::after { left: 31px; }
+            .container-card { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .container-card::after { left: 21px; }
+            .left::after, .right::after { left: 21px; }
+            .right { left: 0%; }
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <aside class="sidebar">
-        <div class="profile-card">
-            <img src="profile_image.jpg" alt="Mateo Barona" class="profile-img">
-            <h2 style="margin: 0; font-size: 1.5rem;">Mateo Barona</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 15px;">Estudiante & Analista</p>
-            
-            <span class="role-badge"><i class="fas fa-database"></i> Data Analyst</span>
-            <span class="role-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--success);"><i class="fas fa-robot"></i> Automation</span>
-
-            <div style="text-align: left; margin-top: 25px; font-size: 0.9rem; color: var(--text-secondary);">
-                <p><i class="fas fa-map-marker-alt" style="width: 20px;"></i> Ambato, Ecuador</p>
-                <p><i class="fas fa-building" style="width: 20px;"></i> Ambacar (Pasante)</p>
-                <p><i class="fas fa-graduation-cap" style="width: 20px;"></i> Estudiante Universitario</p>
-            </div>
-
-            <div class="social-links">
-                <a href="https://github.com/FlacoBarona" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/mateo-barona-18638420b/" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="mailto:mateobarona3102@gmail.com" class="social-btn" title="Email"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-    </aside>
-
-    <main class="main-content">
+    <section class="hero">
+        <img src="profile_image.jpg" alt="Mateo Barona" class="profile-pic">
+        <h1>Mateo Barona</h1>
         
-        <section>
-            <div class="hero-text">
-                <h3 style="color: white; margin-top: 0;">🚀 Convirtiendo caos en estructura</h3>
-                <p>
-                    Especialista en construir puentes entre los <strong>datos crudos</strong> y las <strong>decisiones estratégicas</strong>. 
-                    Mi enfoque no es solo analizar lo que pasó, sino automatizar lo que pasará.
-                    Experiencia real optimizando cadenas de suministro y flujos financieros mediante <strong>SQL, Python y n8n</strong>.
-                </p>
-            </div>
-        </section>
+        <div class="typing-container">
+            <span id="typewriter"></span><span class="cursor">|</span>
+        </div>
 
-        <section>
-            <h3 class="section-title"><i class="fas fa-layer-group"></i> Stack Tecnológico</h3>
-            <div class="tech-grid">
-                <div class="tech-item"><i class="fab fa-python"></i><br>Python</div>
-                <div class="tech-item"><i class="fas fa-database"></i><br>SQL & ETL</div>
-                <div class="tech-item"><i class="fas fa-chart-bar"></i><br>Power BI</div>
-                <div class="tech-item"><i class="fas fa-bolt"></i><br>n8n / Make</div>
-                <div class="tech-item"><i class="fas fa-brain"></i><br>Gemini API</div>
-                <div class="tech-item"><i class="fab fa-google"></i><br>Google Cloud</div>
-            </div>
-        </section>
+        <div class="cta-buttons">
+            <a href="https://github.com/FlacoBarona" class="btn btn-filled"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://www.linkedin.com/in/mateo-barona-18638420b" class="btn btn-outline" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        </div>
+    </section>
 
-        <section>
-            <h3 class="section-title"><i class="fas fa-project-diagram"></i> Portafolio de Soluciones</h3>
+    <section class="timeline-section">
+        <div class="section-header">
+            <h2>Engineering Roadmap</h2>
+            <p>// La evolución de mis despliegues y proyectos</p>
+        </div>
+
+        <div class="timeline">
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                
-                <div class="project-card">
-                    <div class="card-header">
-                        <strong style="color: var(--accent);">Asistente IA de Calendario</strong>
-                        <span class="status-dot" title="Activo"></span>
+            <div class="container-card left">
+                <div class="content">
+                    <span class="date">2025 - Q4</span>
+                    <h3>🤖 AI Calendar Agent</h3>
+                    <p>Desarrollo de un sistema autónomo multimodal (Voz/Texto) capaz de gestionar agendas complejas con lógica de prevención de conflictos. Integración de LLMs con webhooks.</p>
+                    <div class="tech-stack-mini">
+                        <span class="tech-badge">n8n</span>
+                        <span class="tech-badge">Gemini 1.5 Pro</span>
+                        <span class="tech-badge">Telegram API</span>
                     </div>
-                    <div class="card-body">
-                        <p style="font-size: 0.95rem; color: #cbd5e1;">
-                            Agente autónomo que gestiona agenda vía voz/texto. Utiliza LLMs para entender contexto temporal y lógica de prevención de conflictos.
-                        </p>
-                        <div class="tags">
-                            <span class="tag">n8n</span>
-                            <span class="tag">Gemini AI</span>
-                            <span class="tag">Telegram API</span>
-                        </div>
-                    </div>
-                    <a href="https://github.com/FlacoBarona/Google_Calendar_Assistant" class="btn-link">Ver Código & Documentación <i class="fas fa-arrow-right"></i></a>
+                    <a href="https://github.com/FlacoBarona/Google_Calendar_Assistant" style="display:block; margin-top:15px; color:var(--primary); font-size:0.9rem;">View Code -></a>
                 </div>
-
-                <div class="project-card">
-                    <div class="card-header">
-                        <strong style="color: var(--accent);">Chatbot Logístico (RPA)</strong>
-                        <span class="status-dot" title="Producción"></span>
-                    </div>
-                    <div class="card-body">
-                        <p style="font-size: 0.95rem; color: #cbd5e1;">
-                            Sistema de consulta de inventario para Ambacar. Redujo la carga operativa manual al permitir consultas en lenguaje natural sobre stock y ubicación.
-                        </p>
-                        <div class="tags">
-                            <span class="tag">SQL</span>
-                            <span class="tag">Webhooks</span>
-                            <span class="tag">Automation</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn-link" style="color: var(--text-secondary); cursor: default;">Implementación Interna <i class="fas fa-lock"></i></a>
-                </div>
-
-                <div class="project-card">
-                    <div class="card-header">
-                        <strong style="color: var(--accent);">ETL Financiero Corporativo</strong>
-                        <span class="status-dot"></span>
-                    </div>
-                    <div class="card-body">
-                        <p style="font-size: 0.95rem; color: #cbd5e1;">
-                            Pipeline de datos para centralizar "Cuentas por Cobrar" de 3 empresas del grupo automotriz, unificando fuentes heterogéneas para BI.
-                        </p>
-                        <div class="tags">
-                            <span class="tag">Pentaho</span>
-                            <span class="tag">Apache Hop</span>
-                            <span class="tag">Data Warehousing</span>
-                        </div>
-                    </div>
-                    <div style="padding: 12px; text-align: center; color: var(--text-secondary); font-size: 0.8rem;">Arquitectura de Datos</div>
-                </div>
-
             </div>
-        </section>
 
-    </main>
-</div>
+            <div class="container-card right">
+                <div class="content">
+                    <span class="date">2025 - Q2</span>
+                    <h3>🚛 Ambacar Logistics Bot</h3>
+                    <p>Ingeniería de automatización para reducir carga operativa. Orquestación de bases de datos SQL con interfaces de chat para consultas de inventario en tiempo real.</p>
+                    <div class="tech-stack-mini">
+                        <span class="tech-badge">SQL Optimization</span>
+                        <span class="tech-badge">RPA</span>
+                        <span class="tech-badge">Webhook Security</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-card left">
+                <div class="content">
+                    <span class="date">2025 - Q3</span>
+                    <h3>🔄 Enterprise ETL Pipeline</h3>
+                    <p>Diseño de arquitectura de datos para unificar finanzas de 3 compañías. Transformación de datos crudos heterogéneos en insights estructurados para BI.</p>
+                    <div class="tech-stack-mini">
+                        <span class="tech-badge">Apache Hop</span>
+                        <span class="tech-badge">Pentaho</span>
+                        <span class="tech-badge">Data Modeling</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-card right">
+                <div class="content">
+                    <span class="date">2025 - Q1</span>
+                    <h3>🧠 Computer Vision Model</h3>
+                    <p>Incursión en Machine Learning profundo. Entrenamiento de una red neuronal para clasificación de rostros humanos vs no humanos.</p>
+                    <div class="tech-stack-mini">
+                        <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Flask API</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">
+        <p>Built with <i class="fas fa-code" style="color:var(--primary)"></i> & Coffee by Mateo Barona.</p>
+    </footer>
+
+    <script>
+        // 1. EFECTO TYPING
+        const texts = [
+            "Software Engineer",
+            "Automation Specialist", 
+            "Data Analyst",
+            "Building the Future..."
+        ];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        (function type() {
+            if (count === texts.length) { count = 0; }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+            
+            document.getElementById("typewriter").textContent = letter;
+            
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); // Espera 2s antes de borrar/cambiar
+            } else {
+                setTimeout(type, 100); // Velocidad de escritura
+            }
+        })();
+
+        // 2. EFECTO SCROLL REVEAL (TIMELINE)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.container-card').forEach((el) => observer.observe(el));
+    </script>
 
 </body>
 </html>
