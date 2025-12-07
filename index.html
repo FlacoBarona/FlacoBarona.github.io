@@ -3,382 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mateo Barona | Software Engineer & Data</title>
+    <title>Mateo Barona | Dashboard</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- VARIABLES & RESET --- */
         :root {
-            --bg: #0a0f1c; /* Fondo casi negro */
-            --card-bg: rgba(20, 30, 48, 0.6);
-            --primary: #38bdf8; /* Cyan */
-            --secondary: #818cf8; /* Indigo */
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --code-font: 'JetBrains Mono', monospace;
-            --body-font: 'Inter', sans-serif;
-            --line-color: rgba(56, 189, 248, 0.2);
+            --bg-body: #09090b;       /* Negro profundo */
+            --bg-card: #18181b;       /* Gris Zinc */
+            --bg-card-hover: #27272a;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;        /* Azul UI */
+            --border: #27272a;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+
         body {
-            background-color: var(--bg);
+            background-color: var(--bg-body);
             color: var(--text-main);
-            font-family: var(--body-font);
-            overflow-x: hidden; /* Evita scroll horizontal */
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            min-height: 100vh;
         }
 
-        /* Fondo estilo "Grid" de ingeniería */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            pointer-events: none;
-        }
+        a { text-decoration: none; color: inherit; }
 
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-
-        /* --- HERO SECTION (TERMINAL STYLE) --- */
-        .hero {
-            min-height: 90vh;
+        /* --- SIDEBAR (NAVEGACIÓN) --- */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-body);
+            border-right: 1px solid var(--border);
+            padding: 30px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            position: relative;
+            justify-content: space-between;
+            position: fixed;
+            height: 100vh;
+            left: 0; top: 0;
+            z-index: 10;
         }
 
-        .profile-pic {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            padding: 5px; /* Espacio entre borde y foto */
-            background: transparent;
-            object-fit: cover;
-            margin-bottom: 30px;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(56, 189, 248, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        /* Efecto de escritura (Typing) */
-        .typing-container {
-            font-family: var(--code-font);
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            min-height: 1.5em; /* Reserva espacio */
-        }
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            background-color: var(--primary);
-            animation: blink 1s infinite;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .cta-buttons {
-            margin-top: 40px;
+        .user-mini {
             display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .user-mini img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            transition: 0.2s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+        
+        .nav-item.active i { color: var(--accent); }
+
+        /* --- MAIN CONTENT (BENTO GRID) --- */
+        .main-content {
+            margin-left: 260px; /* Ancho del sidebar */
+            padding: 40px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .header-title {
+            margin-bottom: 30px;
+        }
+        .header-title h1 { font-size: 2rem; font-weight: 800; }
+        .header-title p { color: var(--text-muted); }
+
+        /* EL GRID MÁGICO */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 Columnas */
+            grid-auto-rows: minmax(180px, auto);   /* Altura mínima */
             gap: 20px;
         }
-        
-        .btn {
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: 1px solid var(--primary);
+
+        /* CLASES PARA TAMAÑOS DE TARJETAS */
+        .col-span-1 { grid-column: span 1; }
+        .col-span-2 { grid-column: span 2; }
+        .col-span-3 { grid-column: span 3; } /* Ocupa 3 columnas */
+        .col-span-4 { grid-column: span 4; } /* Ancho completo */
+        .row-span-2 { grid-row: span 2; }    /* Alto doble */
+
+        /* ESTILO DE LAS TARJETAS */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            z-index: 1;
-        }
-        
-        .btn::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 0%; height: 100%;
-            background: var(--primary);
-            z-index: -1;
-            transition: 0.3s;
-        }
-        .btn:hover::before { width: 100%; }
-        .btn:hover { color: #0a0f1c; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
-        .btn-outline { background: transparent; color: var(--primary); }
-        .btn-filled { background: var(--primary); color: #0a0f1c; }
-
-        /* --- TIMELINE (ROADMAP) --- */
-        .timeline-section {
-            padding: 80px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
+        .card:hover {
+            border-color: var(--text-muted);
+            transform: translateY(-2px);
+            background: var(--bg-card-hover);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .section-header h2 {
-            font-size: 2.5rem;
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .section-header p {
+
+        .card-desc {
+            font-size: 0.9rem;
             color: var(--text-muted);
-            font-family: var(--code-font);
+            line-height: 1.5;
         }
 
-        .timeline {
-            position: relative;
-        }
-
-        /* La línea central */
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--line-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            border-radius: 2px;
-        }
-
-        .container-card {
-            padding: 10px 40px;
-            position: relative;
-            background-color: inherit;
-            width: 50%;
-            opacity: 0; /* Para animación */
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
-        }
-
-        /* Alternancia Izquierda / Derecha */
-        .left { left: 0; }
-        .right { left: 50%; }
-
-        /* El punto (nodo) en la línea */
-        .container-card::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            right: -10px;
-            background-color: var(--bg);
-            border: 4px solid var(--primary);
-            top: 20px;
-            border-radius: 50%;
-            z-index: 1;
-            box-shadow: 0 0 10px var(--primary);
-        }
-        .right::after { left: -10px; }
-
-        /* Contenido de la tarjeta */
-        .content {
-            padding: 25px;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            position: relative;
-        }
+        /* --- WIDGETS ESPECÍFICOS --- */
         
-        .content:hover {
-            border-color: var(--primary);
-            transform: scale(1.02);
-            transition: 0.3s;
+        /* 1. Stack Widget (Iconos) */
+        .stack-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .stack-icon {
+            font-size: 1.8rem;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .stack-icon:hover { color: var(--accent); transform: scale(1.2); }
+
+        /* 2. Map Widget */
+        .map-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            filter: invert(1);
+        }
+        .location-pin {
+            margin-top: auto;
+            z-index: 2;
         }
 
-        .date {
-            font-family: var(--code-font);
-            font-size: 0.85rem;
-            color: var(--primary);
-            margin-bottom: 10px;
+        /* 3. GitHub Button */
+        .btn-github {
+            margin-top: 15px;
+            background: #fff;
+            color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
             display: block;
         }
-
-        .tech-stack-mini {
-            margin-top: 15px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .tech-badge {
-            font-size: 0.75rem;
-            background: rgba(255,255,255,0.05);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-family: var(--code-font);
-            border: 1px solid transparent;
-        }
-        .content:hover .tech-badge { border-color: rgba(56, 189, 248, 0.3); }
-
-        /* Clase visible para JS */
-        .visible {
-            opacity: 1;
-            transform: translateY(0);
+        
+        /* 4. Project Image */
+        .project-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         /* --- RESPONSIVE MOBILE --- */
-        @media screen and (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .timeline::after { left: 31px; }
-            .container-card { width: 100%; padding-left: 70px; padding-right: 25px; }
-            .container-card::after { left: 21px; }
-            .left::after, .right::after { left: 21px; }
-            .right { left: 0%; }
+        @media (max-width: 1024px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .col-span-3 { grid-column: span 2; }
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; padding-bottom: 80px; }
+            .sidebar {
+                width: 100%; height: auto; position: fixed; bottom: 0; top: auto;
+                flex-direction: row; padding: 10px 20px; border-right: none; border-top: 1px solid var(--border);
+                justify-content: space-around;
+            }
+            .user-mini, .sidebar-footer { display: none; }
+            .nav-item span { display: none; } /* Solo iconos en móvil */
+            .nav-item { font-size: 1.5rem; padding: 10px; }
+            
+            .main-content { margin-left: 0; padding: 20px; padding-bottom: 100px; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .col-span-1, .col-span-2, .col-span-3, .col-span-4 { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <img src="profile_image.jpg" alt="Mateo Barona" class="profile-pic">
-        <h1>Mateo Barona</h1>
+    <aside class="sidebar">
+        <div>
+            <div class="user-mini">
+                <img src="profile_image.jpg" alt="Profile">
+                <div>
+                    <h3 style="font-size:1rem;">Mateo Barona</h3>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Ingeniero & Analista</span>
+                </div>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item active"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
+                <a href="https://github.com/FlacoBarona" class="nav-item"><i class="fab fa-github"></i> <span>GitHub</span></a>
+                <a href="https://www.linkedin.com/in/mateo-barona-18638420b" class="nav-item"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>
+                <a href="mailto:mateobarona3102@gmail.com" class="nav-item"><i class="fas fa-envelope"></i> <span>Contacto</span></a>
+            </nav>
+        </div>
         
-        <div class="typing-container">
-            <span id="typewriter"></span><span class="cursor">|</span>
+        <div class="sidebar-footer" style="color: var(--text-muted); font-size: 0.8rem;">
+            <p>© 2025 Ambato, EC</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <div class="header-title">
+            <h1>Hola, soy Mateo 👋</h1>
+            <p>Construyendo automatizaciones inteligentes y analizando datos en Ambacar.</p>
         </div>
 
-        <div class="cta-buttons">
-            <a href="https://github.com/FlacoBarona" class="btn btn-filled"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://www.linkedin.com/in/mateo-barona-18638420b" class="btn btn-outline" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        </div>
-    </section>
+        <div class="bento-grid">
 
-    <section class="timeline-section">
-        <div class="section-header">
-            <h2>Engineering Roadmap</h2>
-            <p>// La evolución de mis despliegues y proyectos</p>
-        </div>
+            <div class="card col-span-2 row-span-2">
+                <div>
+                    <div class="card-title"><i class="fas fa-user-astronaut" style="color:var(--accent)"></i> Sobre Mí</div>
+                    <p class="card-desc" style="margin-top: 20px; font-size: 1rem;">
+                        Soy un <strong>Ingeniero de Software</strong> en formación apasionado por la eficiencia. 
+                        <br><br>
+                        Mi especialidad es única: combino la lógica dura de la ingeniería de datos (ETL, SQL) con la agilidad de las herramientas No-Code (n8n, Make).
+                        <br><br>
+                        Actualmente lidero iniciativas de RPA en <strong>Ambacar</strong>.
+                    </p>
+                </div>                
+            </div>
 
-        <div class="timeline">
-            
-            <div class="container-card left">
-                <div class="content">
-                    <span class="date">2025 - Q4</span>
-                    <h3>🤖 AI Calendar Agent</h3>
-                    <p>Desarrollo de un sistema autónomo multimodal (Voz/Texto) capaz de gestionar agendas complejas con lógica de prevención de conflictos. Integración de LLMs con webhooks.</p>
-                    <div class="tech-stack-mini">
-                        <span class="tech-badge">n8n</span>
-                        <span class="tech-badge">Gemini 1.5 Pro</span>
-                        <span class="tech-badge">Telegram API</span>
-                    </div>
-                    <a href="https://github.com/FlacoBarona/Google_Calendar_Assistant" style="display:block; margin-top:15px; color:var(--primary); font-size:0.9rem;">View Code -></a>
+            <div class="card col-span-1">
+                <div class="map-bg"></div>
+                <div class="location-pin">
+                    <h3 style="font-size: 1.5rem;">🇪🇨</h3>
+                    <strong>Ambato, Ecuador</strong>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Base de operaciones</p>
                 </div>
             </div>
 
-            <div class="container-card right">
-                <div class="content">
-                    <span class="date">2025 - Q2</span>
-                    <h3>🚛 Ambacar Logistics Bot</h3>
-                    <p>Ingeniería de automatización para reducir carga operativa. Orquestación de bases de datos SQL con interfaces de chat para consultas de inventario en tiempo real.</p>
-                    <div class="tech-stack-mini">
-                        <span class="tech-badge">SQL Optimization</span>
-                        <span class="tech-badge">RPA</span>
-                        <span class="tech-badge">Webhook Security</span>
-                    </div>
+            <div class="card col-span-1">
+                <div class="card-title"><i class="fas fa-bolt" style="color:#eab308"></i> Stack Core</div>
+                <div class="stack-list">
+                    <i class="fab fa-python stack-icon" title="Python"></i>
+                    <i class="fas fa-database stack-icon" title="SQL"></i>
+                    <i class="fas fa-project-diagram stack-icon" title="n8n"></i>
+                    <i class="fab fa-google stack-icon" title="Gemini AI"></i>
+                    <i class="fas fa-chart-pie stack-icon" title="Power BI"></i>
                 </div>
             </div>
 
-            <div class="container-card left">
-                <div class="content">
-                    <span class="date">2025 - Q3</span>
-                    <h3>🔄 Enterprise ETL Pipeline</h3>
-                    <p>Diseño de arquitectura de datos para unificar finanzas de 3 compañías. Transformación de datos crudos heterogéneos en insights estructurados para BI.</p>
-                    <div class="tech-stack-mini">
-                        <span class="tech-badge">Apache Hop</span>
-                        <span class="tech-badge">Pentaho</span>
-                        <span class="tech-badge">Data Modeling</span>
-                    </div>
+            <div class="card col-span-2">
+                <div class="card-title"><i class="fas fa-robot"></i> AI Calendar Agent</div>
+                <p class="card-desc">
+                    Sistema de gestión de agenda multimodal (Voz/Texto) con lógica anti-conflictos usando Gemini 1.5 Pro.
+                </p>
+                <div style="display:flex; gap:10px; margin-top:15px;">
+                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">n8n</span>
+                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">TypeScript</span>
+                </div>
+                <a href="https://github.com/FlacoBarona" class="btn-github" target="_blank">Ver Código <i class="fab fa-github"></i></a>
+            </div>
+
+            <div class="card col-span-2">
+                <div class="card-title"><i class="fas fa-truck-loading"></i> Logistics Chatbot</div>
+                <p class="card-desc">
+                    Bot implementado en Ambacar para consultas de inventario vía WhatsApp. Redujo 40% la carga operativa manual.
+                </p>
+                <div style="display:flex; gap:10px; margin-top:15px;">
+                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">SQL</span>
+                    <span style="font-size:0.75rem; background:#27272a; padding:4px 8px; border-radius:4px;">Webhooks</span>
                 </div>
             </div>
 
-            <div class="container-card right">
-                <div class="content">
-                    <span class="date">2025 - Q1</span>
-                    <h3>🧠 Computer Vision Model</h3>
-                    <p>Incursión en Machine Learning profundo. Entrenamiento de una red neuronal para clasificación de rostros humanos vs no humanos.</p>
-                    <div class="tech-stack-mini">
-                        <span class="tech-badge">TensorFlow</span>
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">Flask API</span>
-                    </div>
-                </div>
+            <div class="card col-span-4">
+                <div class="card-title"><i class="fas fa-code-branch"></i> Actividad de Ingeniería</div>
+                <img src="https://ghchart.rshah.org/3b82f6/tu-usuario" alt="Github Chart" style="width:100%; margin-top:15px; opacity:0.8;">
             </div>
 
         </div>
-    </section>
 
-    <footer style="text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">
-        <p>Built with <i class="fas fa-code" style="color:var(--primary)"></i> & Coffee by Mateo Barona.</p>
-    </footer>
-
-    <script>
-        // 1. EFECTO TYPING
-        const texts = [
-            "Software Engineer",
-            "Automation Specialist", 
-            "Data Analyst",
-            "Building the Future..."
-        ];
-        let count = 0;
-        let index = 0;
-        let currentText = "";
-        let letter = "";
-
-        (function type() {
-            if (count === texts.length) { count = 0; }
-            currentText = texts[count];
-            letter = currentText.slice(0, ++index);
-            
-            document.getElementById("typewriter").textContent = letter;
-            
-            if (letter.length === currentText.length) {
-                count++;
-                index = 0;
-                setTimeout(type, 2000); // Espera 2s antes de borrar/cambiar
-            } else {
-                setTimeout(type, 100); // Velocidad de escritura
-            }
-        })();
-
-        // 2. EFECTO SCROLL REVEAL (TIMELINE)
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.container-card').forEach((el) => observer.observe(el));
-    </script>
+    </main>
 
 </body>
 </html>
